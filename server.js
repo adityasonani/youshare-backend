@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 const path = require('path');
 
@@ -9,6 +10,13 @@ app.use(express.static('public'));
 
 const connectDB = require('./config/db');
 connectDB();
+
+const corsOptions = {
+    origin: process.env.ALLOWED_CLIENTS.split(',')
+
+};
+
+app.use(cors(corsOptions));
 
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
