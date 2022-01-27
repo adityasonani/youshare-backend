@@ -24,29 +24,30 @@ router.post('/', (req, res)=>{
     // store file
     upload(req, res, async (err)=>{
         // validate req
-        if (!req.file) {
-            return res.json({error: 'Please fill in all fields properly.'});
-        }
-        
-        if (err) {
-            return res.status(500).send({error: err.message});
-        }
+        // if (!req.file) {
+        //     return res.json({error: 'Please fill in all fields properly.'});
+        // }
+        try {
+            if (err) {
+                return res.status(500).send({error: err.message});
+            }
 
-        // store in db
-        const file = new File({
-            filename: req.file.filename,
-            uuid: uuid4(),
-            path: req.file.path,
-            size: req.file.size
-        });
+            // store in db
+            const file = new File({
+                filename: req.file.filename,
+                uuid: uuid4(),
+                path: req.file.path,
+                size: req.file.size
+            });
 
-        const response = await file.save();
-        return res.json({file: `${process.env.APP_BASE_URL}/files/${response.uuid}`});
-        // "http://localhost:3000/files/d47fa0d9-7bcd-4c70-ae43-ada0da435f7c"
+            const response = await file.save();
+            return res.json({file: `${process.env.APP_BASE_URL}/files/${response.uuid}`});
+            // "http://localhost:3000/files/d47fa0d9-7bcd-4c70-ae43-ada0da435f7c"
+        } catch (err) {
+            return res.status(500).send({error: 'Something went wrong.'});
+        }
     });
-
-    // send response (dw link)
 
 });
 
-module.exports = router
+module.exports = router;
