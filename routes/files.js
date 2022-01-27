@@ -29,9 +29,10 @@ router.post('/', (req, res)=>{
         // }
         try {
             if (err) {
+                console.log("On Line 32 some error occured");
                 return res.status(500).send({error: err.message});
             }
-
+            console.log("trying to store in db on line 35");
             // store in db
             const file = new File({
                 filename: req.file.filename,
@@ -39,6 +40,7 @@ router.post('/', (req, res)=>{
                 path: req.file.path,
                 size: req.file.size
             });
+            console.log("came till line 43");
             console.log("Saving file in database " + file.filename +" "+file.size);
             const response = await file.save();
             console.log("File saved " + file.filename +" "+file.size);
