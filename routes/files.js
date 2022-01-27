@@ -39,9 +39,11 @@ router.post('/', (req, res)=>{
                 path: req.file.path,
                 size: req.file.size
             });
-
+            console.log("Saving file in database " + file.filename +" "+file.size);
             const response = await file.save();
-            return res.json({file: `${process.env.APP_BASE_URL}/files/${response.uuid}`});
+            console.log("File saved " + file.filename +" "+file.size);
+            console.log("returning url " + `${process.env.APP_BASE_URL}/files/${response.uuid}`);
+            return res.json({file: `${process.env.APP_BASE_URL}/files/${response.uuid}`}).status(200);
             // "http://localhost:3000/files/d47fa0d9-7bcd-4c70-ae43-ada0da435f7c"
         } catch (err) {
             return res.status(500).send({error: 'Something went wrong.'});
