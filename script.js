@@ -19,7 +19,4 @@ async function deleteData() {
     }
 }
 
-deleteData().then(() => {
-    console.log("Process done!");
-    process.exit();
-});
+module.exports = deleteData;
